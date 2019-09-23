@@ -1,6 +1,6 @@
 ﻿namespace Pintle.Packager.Pipelines
 {
-    public abstract class AbstractBuildPackageProcessor
+    public abstract class BuildPackageProcessor
     {
         public abstract void Process(BuildPackageArgs args);
     }

@@ -80,11 +80,17 @@
     <Compile Include="Configuration\ItemConfiguration.cs" />
     <Compile Include="Configuration\MetadataConfiguration.cs" />
     <Compile Include="Configuration\PackageConfiguration.cs" />
+    <Compile Include="Configuration\ParameterConfiguration.cs" />
     <Compile Include="PackagerService.cs" />
     <Compile Include="Pipelines\BuildPackageArgs.cs" />
     <Compile Include="Pipelines\BuildPackagePipeline.cs" />
     <Compile Include="Pipelines\BuildPackageProcessor.cs" />
-    <Compile Include="Pipelines\BuildPackage\BuildPackage.cs" />
+    <Compile Include="Pipelines\BuildPackage\AddPackageFiles.cs" />
+    <Compile Include="Pipelines\BuildPackage\AddPackageItems.cs" />
+    <Compile Include="Pipelines\BuildPackage\GeneratePackage.cs" />
+    <Compile Include="Pipelines\BuildPackage\SetPackageFilePath.cs" />
+    <Compile Include="Pipelines\BuildPackage\SetPackageMetadata.cs" />
+    <Compile Include="Pipelines\BuildPackage\ValidateRequiredParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sitecore\admin\Packager.aspx.cs">
       <DependentUpon>Packager.aspx</DependentUpon>
