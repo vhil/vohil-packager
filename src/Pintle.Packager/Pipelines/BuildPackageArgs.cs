@@ -17,7 +17,7 @@ namespace Pintle.Packager.Pipelines
 	    public PackageProject Package { get; }
 		public ExplicitItemSource PackageItems { get; }
 		public ExplicitFileSource PackageFiles { get; }
-		public SourceCollection<PackageEntry> PackageSourses { get; }
+		public SourceCollection<PackageEntry> PackageSources { get; }
 		public string PackageFilePath { get; set; }
 		public BuildPackageArgs(PackageConfiguration packageConfiguration, IDictionary<string, string> parameters)
         {
@@ -35,9 +35,9 @@ namespace Pintle.Packager.Pipelines
 				Name = "Static items"
 			};
 
-			this.PackageSourses = new SourceCollection<PackageEntry>();
+			this.PackageSources = new SourceCollection<PackageEntry>();
 
-			this.PackageSourses.Add(this.PackageItems);
+			this.PackageSources.Add(this.PackageItems);
 		}
     }
 }

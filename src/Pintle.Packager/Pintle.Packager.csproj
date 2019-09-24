@@ -81,6 +81,7 @@
     <Compile Include="Configuration\MetadataConfiguration.cs" />
     <Compile Include="Configuration\PackageConfiguration.cs" />
     <Compile Include="Configuration\ParameterConfiguration.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="PackagerService.cs" />
     <Compile Include="Pipelines\BuildPackageArgs.cs" />
     <Compile Include="Pipelines\BuildPackagePipeline.cs" />

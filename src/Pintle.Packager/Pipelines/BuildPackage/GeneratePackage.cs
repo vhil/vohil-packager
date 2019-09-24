@@ -13,9 +13,9 @@
 		        args.Package.Sources.Add(args.PackageFiles);
 	        }
 
-			if (args.PackageItems.Entries.Count > 0 || args.PackageSourses.Sources.Count > 0)
+			if (args.PackageItems.Entries.Count > 0 || args.PackageSources.Sources.Count > 0)
 	        {
-		        args.Package.Sources.Add(args.PackageSourses);
+		        args.Package.Sources.Add(args.PackageSources);
 	        }
 
 	        args.Package.SaveProject = true;

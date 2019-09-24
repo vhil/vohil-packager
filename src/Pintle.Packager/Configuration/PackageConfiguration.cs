@@ -6,6 +6,7 @@
 	using System.Collections.Generic;
 	using Sitecore.Xml;
 	using System.Xml;
+	using Extensions;
 
 	public class PackageConfiguration
     {
@@ -31,9 +32,9 @@
 
 		public void AddItem(XmlNode node)
 		{
-			var database = XmlUtil.GetAttribute("database", node);
-			var path = XmlUtil.GetAttribute("path", node);
-			var children = XmlUtil.GetAttribute("children", node);
+			var database = XmlUtil.GetAttribute("database", node).EmptyIfNull();
+			var path = XmlUtil.GetAttribute("path", node).EmptyIfNull();
+			var children = XmlUtil.GetAttribute("children", node).EmptyIfNull();
 
 			if (!string.IsNullOrWhiteSpace(path) && Factory.GetDatabaseNames().Any(x => x == database))
 			{
@@ -50,16 +51,17 @@
 
 		public void AddParameter(XmlNode node)
 		{
-			var name = XmlUtil.GetAttribute("name", node);
-			var htmlType = XmlUtil.GetAttribute("htmlType", node);
-			var displayName = XmlUtil.GetAttribute("displayName", node);
-			var required = XmlUtil.GetAttribute("required", node);
+			var name = XmlUtil.GetAttribute("name", node).EmptyIfNull();
+			var htmlType = XmlUtil.GetAttribute("htmlType", node).EmptyIfNull();
+			var displayName = XmlUtil.GetAttribute("displayName", node).EmptyIfNull();
+			var defaultValue = XmlUtil.GetAttribute("defaultValue", node).EmptyIfNull();
+			var required = XmlUtil.GetAttribute("required", node).EmptyIfNull();
 
 			if (!string.IsNullOrWhiteSpace(name) && !this.Parameters.ContainsKey(name))
 			{
 				this.Parameters.Add(name, string.IsNullOrWhiteSpace(required)
-					? new ParameterConfiguration(name, displayName, htmlType)
-					: new ParameterConfiguration(name, displayName, htmlType, required.Equals("true", StringComparison.OrdinalIgnoreCase)));
+					? new ParameterConfiguration(name, displayName, htmlType, defaultValue)
+					: new ParameterConfiguration(name, displayName, htmlType, defaultValue, required.Equals("true", StringComparison.OrdinalIgnoreCase)));
 			}
 		}
 
@@ -70,7 +72,7 @@
 
 		public void AddFile(XmlNode node)
 		{
-			var path = XmlUtil.GetAttribute("path", node);
+			var path = XmlUtil.GetAttribute("path", node).EmptyIfNull();
 			if (!string.IsNullOrWhiteSpace(path))
 			{
 				this.Files.Add(new FileConfiguration(path));
@@ -82,7 +84,7 @@
 			var packageNodes = Factory.GetConfigNodes("pintle.packager/packages//package");
 			foreach (XmlNode packageNode in packageNodes)
 			{
-				var name = XmlUtil.GetAttribute("name", packageNode);
+				var name = XmlUtil.GetAttribute("name", packageNode).EmptyIfNull();
 				var packageConfiguration = Factory.CreateObject<PackageConfiguration>(packageNode);
 				packageConfiguration.Name = name;
 				yield return packageConfiguration;

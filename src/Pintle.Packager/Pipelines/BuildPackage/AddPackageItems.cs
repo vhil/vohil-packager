@@ -15,7 +15,7 @@
 				{
 					if (itemConfig.IncludeChildren)
 					{
-						args.PackageSourses.Add(new ItemSource
+						args.PackageSources.Add(new ItemSource
 						{
 							SkipVersions = true,
 							Database = item.Uri.DatabaseName,
