@@ -48,18 +48,20 @@
 			<p>Find list of your pre-configured packages below</p>
 		</div>
 
-		<% foreach (var package in this.ConfiguredPackages)
-				{%>
+		<% var count = 0; 
+			foreach (var package in this.ConfiguredPackages)
+			{
+				count++;%>
 		<div class="row marketing">
 			<div class="col-lg-12">
 				<h4>Package: <%=package.Metadata.PackageName%> <%=package.Metadata.Version%> by <%=package.Metadata.Author%> (<%=package.Name %>)</h4>
-				<div class="toggle" data-toggle="metadata">
+				<div class="toggle" data-toggle="metadata_<%=count %>">
 					<b>Metadata</b><span class="caret"></span>
 					<%--<div class="toggle-icons">
 						<span aria-hidden="true">&times;</span>
 					</div>--%>
 				</div>
-				<div id="metadata" style="display: none;">
+				<div id="metadata_<%=count %>" style="display: none;">
 					<table class="table table-striped table-condensed">
 					<tbody >
 						<tr>
@@ -102,14 +104,14 @@
 				</table>
 				</div>
 				<% if (package.Items.Any()) { %>
-					<div class="toggle" data-toggle="items">
+					<div class="toggle" data-toggle="items_<%=count %>">
 						<b><%=package.Items.Count%> Items</b>
 						<span class="caret"></span>
 						<%--<div class="toggle-icons">
 							<span aria-hidden="true">&times;</span>
 						</div>--%>
 					</div>
-					<div id="items" style="display: none;">
+					<div id="items_<%=count %>" style="display: none;">
 						<table class="table table-striped table-condensed">
 							<tbody>
 							<% foreach (var item in package.Items) { %>
@@ -124,13 +126,13 @@
 					</div>
 				<% } %>
 				<% if (package.Files.Any()) { %>
-					<div class="toggle" data-toggle="files">
+					<div class="toggle" data-toggle="files_<%=count %>">
 						<b><%=package.Files.Count%> Files</b><span class="caret"></span>
 						<%--<div class="toggle-icons">
 							<span aria-hidden="true">&times;</span>
 						</div>--%>
 					</div>
-					<div id="files" style="display: none;">
+					<div id="files_<%=count %>" style="display: none;">
 					<table  class="table table-striped table-condensed">
 						<tbody>
 						<% foreach (var file in package.Files) { %>
