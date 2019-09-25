@@ -8,7 +8,7 @@
 
 	public class PackagerService
 	{
-		public BuildPackageResult BuildPackage(PackageConfiguration packageConfiguration, IDictionary<string, string> parameters)
+		public virtual BuildPackageResult BuildPackage(PackageConfiguration packageConfiguration, IDictionary<string, string> parameters)
 		{
 			try
 			{
@@ -21,7 +21,7 @@
 			}
 		}
 
-		public BuildPackageResult BuildPackage(string packageName, NameValueCollection parameters)
+		public virtual BuildPackageResult BuildPackage(string packageName, NameValueCollection parameters)
 		{
 			try
 			{

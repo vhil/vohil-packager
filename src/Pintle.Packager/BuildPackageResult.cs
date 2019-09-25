@@ -15,6 +15,7 @@
 			this.Errors = new Dictionary<string, string>();
 			this.PackageUrl = string.Empty;
 			this.PackageFileName = string.Empty;
+			this.PackageFilePath = string.Empty;
 		}
 
 		public BuildPackageResult(Exception ex)
@@ -34,7 +35,8 @@
 			}
 			else
 			{
-				this.PackageUrl = MainUtil.UnmapPath(args.PackageFilePath);
+				this.PackageFilePath = args.PackageFilePath;
+				this.PackageUrl = MainUtil.UnmapPath(args.PackageFilePath).Replace("\\", "/");
 				var lastSlashIndex = args.PackageFilePath.LastIndexOf('\\');
 				this.PackageFileName = args.PackageFilePath.Substring(lastSlashIndex + 1, args.PackageFilePath.Length - lastSlashIndex - 1);
 				this.PackageUrl = this.PackageUrl.Replace(this.PackageFileName.ToLower(), this.PackageFileName);
@@ -45,5 +47,6 @@
 		public IDictionary<string, string> Errors { get; set; }
 		public string PackageUrl { get; set; }
 		public string PackageFileName { get; set; }
+		internal string PackageFilePath { get; set; }
 	}
 }

@@ -6,7 +6,7 @@ namespace Pintle.Packager.Pipelines
     {
         public abstract void Process(BuildPackageArgs args);
 
-        protected bool AbortIfParametersErrors(BuildPackageArgs args)
+        protected virtual bool AbortIfParametersErrors(BuildPackageArgs args)
         {
 	        if (args.Errors.Any())
 	        {

@@ -163,7 +163,7 @@
 					<% } %>
 					<div class="buttons">
 						<button type="button" class="btn btn-default btn-generate" data-action="generate-package">Generate package</button>
-						<a href="#" class="btn btn-success btn-download" style="display: none;">Download Hawkeye v.0.0.1 Sitecore.NET 9.0.2 (rev. 180604).zip</a>
+						<a href="#" class="btn btn-success btn-download" style="display: none;"></a>
 					</div>
 					<br/>
 					<ul class="errors" style="display: none;">
@@ -198,21 +198,13 @@
 			errorsContainer.hide();
 			errorsContainer.empty();
 			var qs = form.serialize();
-
-			var action = $(this).attr("data-action");
-
-			if (action === "undefined") {
-				action = "";
-			}
-
-			var url = window.location.href + getJoiner(window.location.href) + qs;
-			url = url + getJoiner(url) + "action=" + action;
+			var url = "/packager/generate?" + qs;
 			var jqxhr = $.getJSON(url, function() {})
 				.done(function (data) {
-					if (!data.success) {
-						for (var errorKey in data.errors) {
-							if (data.errors.hasOwnProperty(errorKey)) {
-								var value = data.errors[errorKey];
+					if (!data.Success) {
+						for (var errorKey in data.Errors) {
+							if (data.Errors.hasOwnProperty(errorKey)) {
+								var value = data.Errors[errorKey];
 								errorsContainer.html(errorsContainer.html() + "<li>" + errorKey + ": " + value + "</li>");
 							}
 						}
@@ -221,8 +213,8 @@
 						var generateBtn = form.find(".btn-generate");
 						generateBtn.html("Re-generate package")
 						var downloadBtn = form.find(".btn-download");
-						downloadBtn.html("Download " + data.packageFileName);
-						downloadBtn.attr("href", data.packageUrl);
+						downloadBtn.html("Download " + data.PackageFileName);
+						downloadBtn.attr("href", data.PackageUrl);
 						downloadBtn.show();
 					}
 				
