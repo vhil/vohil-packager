@@ -28,6 +28,9 @@
 			background-color: #e2e2e2;
 			cursor: pointer;
 		}
+		.errors { color: darkred;}
+		 ul.errors {list-style-type: none;
+		}
 	</style>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -56,11 +59,11 @@
 						<span aria-hidden="true">&times;</span>
 					</div>--%>
 				</div>
-				<div id="metadata">
+				<div id="metadata" style="display: none;">
 					<table class="table table-striped table-condensed">
 					<tbody >
 						<tr>
-							<td>Package name</td>
+							<td widht="50px">Package name</td>
 							<td><%=package.Metadata.PackageName%></td>
 						</tr>
 						<tr>
@@ -80,10 +83,6 @@
 							<td><%=package.Metadata.Comment%></td>
 						</tr>
 						<tr>
-							<td>License</td>
-							<td><%=package.Metadata.License%></td>
-						</tr>
-						<tr>
 							<td>Package ID</td>
 							<td><%=package.Metadata.PackageId%></td>
 						</tr>
@@ -91,6 +90,14 @@
 							<td>Revision</td>
 							<td><%=package.Metadata.Revision%></td>
 						</tr>
+					<tr>
+						<td>License</td>
+						<td><%=package.Metadata.License.Replace(Environment.NewLine, "<br/>")%></td>
+					</tr>
+					<tr>
+						<td>Readme</td>
+						<td><%=package.Metadata.Readme.Replace(Environment.NewLine, "<br/>")%></td>
+					</tr>
 					</tbody>
 				</table>
 				</div>
@@ -109,7 +116,7 @@
 								<tr>
 									<td><%=item.Database%></td>
 									<td><%=item.Path%></td>
-									<td><%=item.IncludeChildren ? "children" : "" %></td>
+									<td><%=item.IncludeChildren ? "children" : "single" %></td>
 								</tr>
 							<% } %>
 							</tbody>
@@ -135,8 +142,10 @@
 					</table>
 					</div>
 				<% } %>
-				<h3>Parameters</h3>
-				<br/>
+				<% if (package.Parameters.Any())  {%>
+					<h3>Parameters</h3>
+					<br/>
+				<% } %>
 				<form>
 					<input type="hidden" name="packageName" value="<%= package.Name%>" />
 					<% foreach (var param in package.Parameters) {%>
@@ -153,9 +162,13 @@
 					</div>
 					<% } %>
 					<div class="buttons">
-						<button type="button" class="btn btn-default btn-generate">Generate package</button>
-						<%--<a href="#" class="btn btn-success btn-download">Download Hawkeye v.0.0.1 Sitecore.NET 9.0.2 (rev. 180604).zip</a>--%>
+						<button type="button" class="btn btn-default btn-generate" data-action="generate-package">Generate package</button>
+						<a href="#" class="btn btn-success btn-download" style="display: none;">Download Hawkeye v.0.0.1 Sitecore.NET 9.0.2 (rev. 180604).zip</a>
 					</div>
+					<br/>
+					<ul class="errors" style="display: none;">
+
+					</ul>
 				</form>
 			</div>
 		</div>
@@ -178,21 +191,48 @@
 	$(function () {
 
 		$(".toggle").on("click", function() { slide(this); });
-		$(".btn").on("click", function (e) {
-			var applyFilters = $(this).attr("data-apply-filter") === "true";
+		$(".btn-generate").on("click", function (e) {
+			disableAllButtons();
+			var form = $(this).closest("form");
+			var errorsContainer = $(form).find(".errors");
+			errorsContainer.hide();
+			errorsContainer.empty();
+			var qs = form.serialize();
+
 			var action = $(this).attr("data-action");
-			var type = $(this).attr("data-type");
 
 			if (action === "undefined") {
 				action = "";
 			}
 
-			if (type === "undefined") {
-				type = "";
-			}
-
-			var url = window.location.href + getJoiner() + "task=" + command;
-			$.get(url, function () { });
+			var url = window.location.href + getJoiner(window.location.href) + qs;
+			url = url + getJoiner(url) + "action=" + action;
+			var jqxhr = $.getJSON(url, function() {})
+				.done(function (data) {
+					if (!data.success) {
+						for (var errorKey in data.errors) {
+							if (data.errors.hasOwnProperty(errorKey)) {
+								var value = data.errors[errorKey];
+								errorsContainer.html(errorsContainer.html() + "<li>" + errorKey + ": " + value + "</li>");
+							}
+						}
+						errorsContainer.show();
+					} else {
+						var generateBtn = form.find(".btn-generate");
+						generateBtn.html("Re-generate package")
+						var downloadBtn = form.find(".btn-download");
+						downloadBtn.html("Download " + data.packageFileName);
+						downloadBtn.attr("href", data.packageUrl);
+						downloadBtn.show();
+					}
+				
+				})
+				.fail(function(data) {
+					console.log("error");
+				})
+				.always(function() {
+					enableAllButtons();
+				});
 		});
 	});
 
@@ -201,17 +241,17 @@
 		$("#" + toToggle).slideToggle();
 	}
 
-	function disableAllButtons(button) {
-		$(".btn-active").attr("disabled", "disabled");
+	function disableAllButtons() {
+		$(".btn").attr("disabled", "disabled");
 	}
 
 	function enableAllButtons() {
-		$(".btn-active").removeAttr("disabled");
+		$(".btn").removeAttr("disabled");
 	}
 
-	function getJoiner() {
+	function getJoiner(url) {
 		var joiner = "?";
-		if (window.location.href.indexOf("?") > -1) {
+		if (url.indexOf("?") > -1) {
 			joiner = "&";
 		}
 

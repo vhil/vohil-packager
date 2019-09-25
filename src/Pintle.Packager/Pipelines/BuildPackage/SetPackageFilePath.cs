@@ -8,6 +8,8 @@
 	{
 		public override void Process(BuildPackageArgs args)
 		{
+			if (this.AbortIfParametersErrors(args)) return;
+
 			var fileName = this.GetFileName(args);
 			var directoryPath = this.PackageStoragePath(args);
 

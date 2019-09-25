@@ -8,7 +8,9 @@
     {
         public override void Process(BuildPackageArgs args)
         {
-	        if (args.PackageFiles.Entries.Count > 0)
+	        if (this.AbortIfParametersErrors(args)) return;
+
+			if (args.PackageFiles.Entries.Count > 0)
 	        {
 		        args.Package.Sources.Add(args.PackageFiles);
 	        }

@@ -44,6 +44,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="Sitecore.Client, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sitecore.Client.NoReferences.8.0.141212\lib\NET45\Sitecore.Client.dll</HintPath>
     </Reference>
@@ -76,11 +77,13 @@
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildPackageResult.cs" />
     <Compile Include="Configuration\FileConfiguration.cs" />
     <Compile Include="Configuration\ItemConfiguration.cs" />
     <Compile Include="Configuration\MetadataConfiguration.cs" />
     <Compile Include="Configuration\PackageConfiguration.cs" />
     <Compile Include="Configuration\ParameterConfiguration.cs" />
+    <Compile Include="Extensions\NameValueCollectionExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="PackagerService.cs" />
     <Compile Include="Pipelines\BuildPackageArgs.cs" />

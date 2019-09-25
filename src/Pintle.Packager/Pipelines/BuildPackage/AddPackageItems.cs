@@ -7,6 +7,8 @@
 	{
 		public override void Process(BuildPackageArgs args)
 		{
+			if (this.AbortIfParametersErrors(args)) return;
+
 			foreach (var itemConfig in args.PackageConfiguration.Items)
 			{
 				var item = Factory.GetDatabase(itemConfig.Database).Items.GetItem(itemConfig.Path);

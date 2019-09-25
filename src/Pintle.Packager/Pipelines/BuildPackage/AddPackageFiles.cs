@@ -7,6 +7,8 @@
 	{
 		public override void Process(BuildPackageArgs args)
 		{
+			if (this.AbortIfParametersErrors(args)) return;
+
 			foreach (var fileConfig in args.PackageConfiguration.Files)
 			{
 				var pathMapped = MainUtil.MapPath(fileConfig.Path);

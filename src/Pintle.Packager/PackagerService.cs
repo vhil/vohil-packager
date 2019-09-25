@@ -1,15 +1,38 @@
-﻿using System.Collections.Generic;
-
-namespace Pintle.Packager
+﻿namespace Pintle.Packager
 {
 	using Configuration;
 	using Pipelines;
+	using System.Collections.Generic;
+	using System.Collections.Specialized;
+	using System;
 
 	public class PackagerService
 	{
-		public BuildPackageArgs BuildPackage(PackageConfiguration packageConfiguration, IDictionary<string, string> parameters)
+		public BuildPackageResult BuildPackage(PackageConfiguration packageConfiguration, IDictionary<string, string> parameters)
 		{
-			return BuildPackagePipeline.BuildPackage(packageConfiguration, parameters);
+			try
+			{
+				var args = BuildPackagePipeline.BuildPackage(packageConfiguration, parameters);
+				return new BuildPackageResult(args);
+			}
+			catch (Exception ex)
+			{
+				return new BuildPackageResult(ex);
+			}
+		}
+
+		public BuildPackageResult BuildPackage(string packageName, NameValueCollection parameters)
+		{
+			try
+			{
+				var packageConfiguration = PackageConfiguration.GetConfiguredPackage(packageName);
+				var args = BuildPackagePipeline.BuildPackage(packageConfiguration, parameters);
+				return new BuildPackageResult(args);
+			}
+			catch (Exception ex)
+			{
+				return new BuildPackageResult(ex);
+			}
 		}
 	}
 }

@@ -1,7 +1,5 @@
 ﻿namespace Pintle.Packager.Pipelines.BuildPackage
 {
-	using System.ComponentModel.DataAnnotations;
-
 	public class ValidateRequiredParameters : BuildPackageProcessor
 	{
 		public override void Process(BuildPackageArgs args)
@@ -10,14 +8,14 @@
 			{
 				if (!args.Parameters.ContainsKey(param.Key) && param.Value.Required)
 				{
-					throw new ValidationException($"Parameter '{param.Key}' is required but was not passed to the package builder.");
+					args.Errors.Add(param.Key, $"Parameter '{param.Key}' is required but was not passed to the package builder.");
 				}
 				else if (args.Parameters.ContainsKey(param.Key) && param.Value.Required)
 				{
 					var parameter = args.Parameters[param.Key];
 					if (string.IsNullOrWhiteSpace(parameter))
 					{
-						throw new ValidationException($"Parameter '{param.Key}' is required but was passed to the package builder as null or empty.");
+						args.Errors.Add(param.Key, $"Parameter '{param.Key}' is required but was not passed to the package builder.");
 					}
 				}
 			}

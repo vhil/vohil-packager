@@ -6,6 +6,8 @@ namespace Pintle.Packager.Pipelines.BuildPackage
 	{
 		public override void Process(BuildPackageArgs args)
 		{
+			if (this.AbortIfParametersErrors(args)) return;
+
 			args.Package.Metadata = new MetadataSource
 			{
 				PackageName = args.PackageConfiguration.Metadata.PackageName,
