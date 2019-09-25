@@ -18,13 +18,37 @@ namespace Pintle.Packager.Controllers
 
 		public ActionResult GeneratePackage(string packageName)
 		{
+			if (string.IsNullOrWhiteSpace(packageName))
+			{
+				this.Response.StatusCode = 404;
+				return this.Content($"'{nameof(packageName)}' query string parameter is required.");
+			}
+
 			var result = this.PackagerService.BuildPackage(packageName, this.Request.QueryString);
 			return this.Json(result, "application/json", Encoding.UTF8, JsonRequestBehavior.AllowGet);
 		}
 
 		public ActionResult GeneratePackageFile(string packageName)
 		{
+			if (string.IsNullOrWhiteSpace(packageName))
+			{
+				this.Response.StatusCode = 404;
+				return this.Content($"'{nameof(packageName)}' query string parameter is required.");
+			}
+
 			var result = this.PackagerService.BuildPackage(packageName, this.Request.QueryString);
+
+			if (!result.Success)
+			{
+				var content = new StringBuilder();
+				foreach (var error in result.Errors)
+				{
+					content.AppendLine($"{error.Key}: {error.Value}");
+				}
+
+				this.Response.StatusCode = 404;
+				return this.Content(content.ToString());
+			}
 
 			var filepath = result.PackageFilePath;
 			var filedata = System.IO.File.ReadAllBytes(filepath);

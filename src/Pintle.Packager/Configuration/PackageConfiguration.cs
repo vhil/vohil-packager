@@ -93,7 +93,13 @@
 
 		public static PackageConfiguration GetConfiguredPackage(string packageName)
 		{
-			return GetConfiguredPackages().FirstOrDefault(x => x.Name.Equals(packageName, StringComparison.CurrentCultureIgnoreCase));
+			var package = GetConfiguredPackages().FirstOrDefault(x => x.Name.Equals(packageName, StringComparison.CurrentCultureIgnoreCase));
+			if (package == null)
+			{
+				throw new ArgumentException($"Package with name '{packageName}' was not found in configuration.");
+			}
+
+			return package;
 		}
 	}
 }

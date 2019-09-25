@@ -1,0 +1,31 @@
+﻿<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+	<sitecore>
+		<pintle.packager>
+			<packages>
+				<package name="MyPackage" type="Pintle.Packager.Configuration.PackageConfiguration, Pintle.Packager">
+					<!--<parameters hint="raw:AddParameter">
+						<param name="myParam" displayName="My parameter" htmlType="text" defaultValue="" required="true"/>
+					</parameters>-->
+					<metadata type="Pintle.Packager.Configuration.MetadataConfiguration, Pintle.Packager">
+						<packageName>My package</packageName>
+						<author>My company</author>
+						<version>1.0.0</version>
+						<publisher>My company</publisher>
+						<license>@ 2019 My company</license>
+						<readme>Readme about my package</readme>
+						<comment>My package comments</comment>
+						<packageId>MP001</packageId>
+						<revision>001</revision>
+					</metadata>
+					<items hint="raw:AddItem">
+						<item database="master" path="/sitecore/templates/Sample"/>
+						<item database="master" path="/sitecore/layout/Renderings/Sample"/>
+					</items>
+					<files hint="raw:AddFile">
+						<file path="/default.css"/>
+					</files>
+				</package>
+			</packages>
+		</pintle.packager>
+	</sitecore>
+</configuration>
