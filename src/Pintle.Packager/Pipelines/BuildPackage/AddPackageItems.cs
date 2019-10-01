@@ -1,4 +1,6 @@
-﻿namespace Pintle.Packager.Pipelines.BuildPackage
+﻿using Sitecore.Diagnostics;
+
+namespace Pintle.Packager.Pipelines.BuildPackage
 {
 	using Sitecore.Configuration;
 	using Sitecore.Install.Items;
@@ -28,6 +30,10 @@
 					{
 						args.PackageItems.Entries.Add(new ItemReference(item.Uri, false).ToString());
 					}
+				}
+				else
+				{
+					Log.Warn("[Pintle.Packager]: Unable to add item '" + itemConfig.Path + "' from '" + itemConfig.Database + "' database to the package. Item does not exist", null, this);
 				}
 			}
 		}

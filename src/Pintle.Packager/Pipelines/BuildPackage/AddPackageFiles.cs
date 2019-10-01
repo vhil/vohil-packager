@@ -2,6 +2,7 @@
 {
 	using System.IO;
 	using Sitecore;
+	using Sitecore.Diagnostics;
 
 	public class AddPackageFiles : BuildPackageProcessor
 	{
@@ -19,7 +20,7 @@
 				}
 				else
 				{
-					// TODO
+					Log.Warn("[Pintle.Packager]: Unable to add file '" + pathMapped + "' to the package. File does not exist", null, this);
 				}
 			}
 		}

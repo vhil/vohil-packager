@@ -5,6 +5,7 @@
 	using System.Collections.Generic;
 	using System.Collections.Specialized;
 	using System;
+	using Sitecore.Diagnostics;
 
 	public class PackagerService
 	{
@@ -17,6 +18,7 @@
 			}
 			catch (Exception ex)
 			{
+				Log.Error("[Pintle.Packager]: Unable to build package '" + packageConfiguration.Name + "'.", ex, this);
 				return new BuildPackageResult(ex);
 			}
 		}
@@ -31,6 +33,7 @@
 			}
 			catch (Exception ex)
 			{
+				Log.Error("[Pintle.Packager]: Unable to build package '" + packageName + "'.", ex, this);
 				return new BuildPackageResult(ex);
 			}
 		}
