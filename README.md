@@ -17,7 +17,7 @@ The module is a NuGet package that can be used in your solution:
 ## Configuration
 
 1. Once nuget package installed, create respective configurations for your packages within `<pintle.packager>` configuration node:
-```
+```xml
 <sitecore>
   <pintle.packager>
     <packages>
