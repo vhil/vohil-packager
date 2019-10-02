@@ -1,6 +1,6 @@
-# Pintle.Packager
+# Sitecore Package Generator or Pintle.Packager
 
-Pintle.Packager is a Sitecore CMS module which provides automation capabilities to generate pre-configred Sitecore CMS installation packages (modules)
+Sitecore Package Generator or Pintle.Packager is a Sitecore CMS module which provides automation capabilities to generate pre-configred Sitecore CMS installation packages (modules)
 
 This may be helpful for you if 
  * you have a sitecore installation package you need to generate periodically
