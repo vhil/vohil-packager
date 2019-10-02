@@ -1,20 +1,20 @@
-﻿using System.Linq;
-
-namespace Pintle.Packager.Pipelines
+﻿namespace Pintle.Packager.Pipelines
 {
-    public abstract class BuildPackageProcessor
-    {
-        public abstract void Process(BuildPackageArgs args);
+	using System.Linq;
 
-        protected virtual bool AbortIfParametersErrors(BuildPackageArgs args)
-        {
-	        if (args.Errors.Any())
-	        {
-		        args.AbortPipeline();
-		        return true;
-	        }
+	public abstract class BuildPackageProcessor
+	{
+		public abstract void Process(BuildPackageArgs args);
 
-	        return false;
-        }
-    }
+		protected virtual bool AbortIfErrorsDetected(BuildPackageArgs args)
+		{
+			if (args.Errors.Any())
+			{
+				args.AbortPipeline();
+				return true;
+			}
+
+			return false;
+		}
+	}
 }

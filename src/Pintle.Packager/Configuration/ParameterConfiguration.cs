@@ -9,10 +9,10 @@
 		public bool Required { get; }
 
 		public ParameterConfiguration(
-			string name, 
-			string displayName, 
-			string htmlType, 
-			string defaultValue = "", 
+			string name,
+			string displayName,
+			string htmlType,
+			string defaultValue = "",
 			bool required = false)
 		{
 			this.Name = name;

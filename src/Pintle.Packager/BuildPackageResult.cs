@@ -26,7 +26,7 @@
 		}
 
 		public BuildPackageResult(BuildPackageArgs args)
-			:this()
+			: this()
 		{
 			if (args.Errors.Any())
 			{
@@ -40,7 +40,7 @@
 				var lastSlashIndex = args.PackageFilePath.LastIndexOf('\\');
 				this.PackageFileName = args.PackageFilePath.Substring(lastSlashIndex + 1, args.PackageFilePath.Length - lastSlashIndex - 1);
 				this.PackageUrl = this.PackageUrl.Replace(this.PackageFileName.ToLower(), this.PackageFileName);
-			} 
+			}
 		}
 
 		public bool Success { get; set; }

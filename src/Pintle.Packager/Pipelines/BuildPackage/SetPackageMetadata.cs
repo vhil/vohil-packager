@@ -1,12 +1,12 @@
-﻿using Sitecore.Install.Metadata;
-
-namespace Pintle.Packager.Pipelines.BuildPackage
+﻿namespace Pintle.Packager.Pipelines.BuildPackage
 {
+	using Sitecore.Install.Metadata;
+
 	public class SetPackageMetadata : BuildPackageProcessor
 	{
 		public override void Process(BuildPackageArgs args)
 		{
-			if (this.AbortIfParametersErrors(args)) return;
+			if (this.AbortIfErrorsDetected(args)) return;
 
 			args.Package.Metadata = new MetadataSource
 			{

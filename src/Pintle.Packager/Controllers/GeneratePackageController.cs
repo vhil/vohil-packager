@@ -1,11 +1,8 @@
-﻿using System.Web;
-
-namespace Pintle.Packager.Controllers
+﻿namespace Pintle.Packager.Controllers
 {
 	using System.Text;
 	using System.Web.Mvc;
-	using Newtonsoft.Json;
-	using Newtonsoft.Json.Serialization;
+	using System.Web;
 
 	public class GeneratePackageController : Controller
 	{

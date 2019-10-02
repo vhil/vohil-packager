@@ -11,7 +11,7 @@
 
 		public override void Process(BuildPackageArgs args)
 		{
-			if (this.AbortIfParametersErrors(args)) return;
+			if (this.AbortIfErrorsDetected(args)) return;
 
 			var fileName = this.GetFileName(args);
 			this.Log.Debug("File name will be '" + fileName + "'", this);

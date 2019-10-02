@@ -9,15 +9,15 @@
 	using Extensions;
 
 	public class PackageConfiguration
-    {
-	    public PackageConfiguration()
-	    {
-		    this.Name = string.Empty;
-		    this.Metadata = new MetadataConfiguration();
+	{
+		public PackageConfiguration()
+		{
+			this.Name = string.Empty;
+			this.Metadata = new MetadataConfiguration();
 			this.Items = new List<ItemConfiguration>();
 			this.Files = new List<FileConfiguration>();
 			this.Parameters = new Dictionary<string, ParameterConfiguration>();
-	    }
+		}
 
 		public string Name { get; set; }
 		public MetadataConfiguration Metadata { get; set; }

@@ -10,7 +10,7 @@
 
 		public override void Process(BuildPackageArgs args)
 		{
-			if (this.AbortIfParametersErrors(args)) return;
+			if (this.AbortIfErrorsDetected(args)) return;
 
 			foreach (var fileConfig in args.PackageConfiguration.Files)
 			{
