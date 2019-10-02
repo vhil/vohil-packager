@@ -3,18 +3,25 @@
 	using System.IO;
 	using Sitecore;
 	using Sitecore.Configuration;
+	using Logging;
 
 	public class SetPackageFilePath : BuildPackageProcessor
 	{
+		protected Logger Log = Logger.ConfiguredInstance;
+
 		public override void Process(BuildPackageArgs args)
 		{
 			if (this.AbortIfParametersErrors(args)) return;
 
 			var fileName = this.GetFileName(args);
+			this.Log.Debug("File name will be '" + fileName + "'", this);
+
 			var directoryPath = this.PackageStoragePath(args);
+			this.Log.Debug("File directory path will be '" + directoryPath + "'", this);
 
 			if (!Directory.Exists(directoryPath))
 			{
+				this.Log.Debug("Creating directory '" + directoryPath + "'...", this);
 				Directory.CreateDirectory(directoryPath);
 			}
 
@@ -22,6 +29,7 @@
 
 			if (File.Exists(filePath))
 			{
+				this.Log.Debug("File exists, deleting file '" + filePath + "'...", this);
 				File.Delete(filePath);
 			}
 

@@ -2,10 +2,12 @@
 {
 	using System.IO;
 	using Sitecore;
-	using Sitecore.Diagnostics;
+	using Logging;
 
 	public class AddPackageFiles : BuildPackageProcessor
 	{
+		protected Logger Log = Logger.ConfiguredInstance;
+
 		public override void Process(BuildPackageArgs args)
 		{
 			if (this.AbortIfParametersErrors(args)) return;
@@ -17,10 +19,11 @@
 				if (!string.IsNullOrWhiteSpace(pathMapped) && File.Exists(pathMapped))
 				{
 					args.PackageFiles.Entries.Add(pathMapped);
+					this.Log.Debug("Added file '" + pathMapped + "' to the package", this);
 				}
 				else
 				{
-					Log.Warn("[Pintle.Packager]: Unable to add file '" + pathMapped + "' to the package. File does not exist", null, this);
+					this.Log.Warn("Unable to add file '" + pathMapped + "' to the package. File does not exist", null, this);
 				}
 			}
 		}

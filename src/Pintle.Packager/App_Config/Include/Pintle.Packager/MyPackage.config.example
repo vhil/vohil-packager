@@ -20,6 +20,7 @@
 					<items hint="raw:AddItem">
 						<item database="master" path="/sitecore/templates/Sample"/>
 						<item database="master" path="/sitecore/layout/Renderings/Sample"/>
+						<item database="master" path="/sitecore/system/Modules/My module" children="false"/>
 					</items>
 					<files hint="raw:AddFile">
 						<file path="/default.css"/>
