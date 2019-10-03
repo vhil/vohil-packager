@@ -1,10 +1,11 @@
 ﻿namespace Pintle.Packager.Pipelines.BuildPackage
 {
-	using Sitecore;
 	using Sitecore.Install;
 	using Sitecore.Install.Zip;
 	using Logging;
 	using System;
+	using Sitecore.Data;
+	using Sitecore.Sites;
 
 	public class GeneratePackage : BuildPackageProcessor
 	{
@@ -26,27 +27,24 @@
 
 			args.Package.SaveProject = true;
 
-			var prevSite = Context.Site.Name;
-
 			try
 			{
-				Context.SetActiveSite("shell");
+				this.Log.Debug("Generating package '" + args.PackageFilePath + "'...", this);
 
-				this.Log.Debug("Generating package '" + args.PackageFilePath + "'", this);
-
+				using (new SiteContextSwitcher(SiteContext.GetSite("shell")))
+				using (new DatabaseSwitcher(Database.GetDatabase("core")))
 				using (var writer = new PackageWriter(args.PackageFilePath))
 				{
+					var context = Sitecore.Install.Serialization.IOUtils.SerializationContext;
 					writer.Initialize(Installer.CreateInstallationContext());
 					PackageGenerator.GeneratePackage(args.Package, writer);
 				}
+
 			}
 			catch (Exception ex)
 			{
+				args.Errors.Add(ex.GetType().Name, ex.Message);
 				this.Log.Error("Error generating package '" + args.PackageFilePath + "'", ex, this);
-			}
-			finally
-			{
-				Context.SetActiveSite(prevSite);
 			}
 		}
 	}
